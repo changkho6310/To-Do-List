@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Danh Sách Công Việc</string>
+    <string name="search_hint">Nhập từ khóa cần tìm</string>
+    <string name="search_icon">Biểu tượng search</string>
+    <string name="status">Trạng thái</string>
+    <string name="order_by">Sắp xếp theo</string>
+    <string name="enter_task">Nhập công việc</string>
+    <string name="enter_deadline">Nhập ngày kết thúc</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="submit">Đồng ý</string>
+    <string name="reset_default">Đặt lại mặc định</string>
+</resources>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/edtAddTask"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:autofillHints="name"
+        android:layout_marginTop="@dimen/margin_y_lg"
+        android:layout_marginEnd="@dimen/margin_x_lg"
+        android:ems="10"
+        android:hint="@string/enter_task"
+        android:inputType="textPersonName"
+        android:paddingStart="@dimen/margin_x_lg"
+        android:paddingEnd="@dimen/margin_x_lg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edtAddDeadline"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:autofillHints="name"
+        android:layout_marginStart="@dimen/margin_x_lg"
+        android:layout_marginTop="@dimen/margin_y_lg"
+        android:layout_marginEnd="@dimen/margin_x_lg"
+        android:ems="10"
+        android:hint="@string/enter_deadline"
+        android:inputType="date"
+        android:paddingStart="@dimen/margin_x_lg"
+        android:paddingEnd="@dimen/margin_x_lg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtAddTask" />
+
+    <Button
+        android:id="@+id/btnCancelAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_x_lg"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/btnSubmitAddTask"
+        app:layout_constraintTop_toTopOf="@+id/btnSubmitAddTask" />
+
+    <Button
+        android:id="@+id/btnSubmitAddTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_y_lg"
+        android:layout_marginEnd="@dimen/margin_x_lg"
+        android:text="@string/submit"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtAddDeadline" />
+</androidx.constraintlayout.widget.ConstraintLayout>

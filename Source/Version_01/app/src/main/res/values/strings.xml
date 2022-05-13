@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">To Do List</string>
+    <string name="search_hint">Enter keywords</string>
+    <string name="search_icon">Search icon</string>
+    <string name="status">Status</string>
+    <string name="order_by">Order by</string>
+    <string name="enter_task">Enter task</string>
+    <string name="enter_deadline">Enter deadline</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="reset_default">Reset Default</string>
+</resources>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="@dimen/margin_x_md"
+    android:layout_marginTop="@dimen/margin_y_md"
+    android:layout_marginEnd="@dimen/margin_x_md"
+    android:layout_marginBottom="@dimen/margin_y_md"
+    tools:context=".MainActivity">
+
+    <AutoCompleteTextView
+        android:id="@+id/edtSearch"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/margin_y_md"
+        android:layout_marginEnd="@dimen/margin_x_md"
+        android:completionThreshold="1"
+        android:hint="@string/search_hint"
+        android:inputType="textPersonName"
+        android:paddingStart="@dimen/margin_x_lg"
+        android:paddingEnd="@dimen/margin_x_lg"
+        app:layout_constraintEnd_toStartOf="@+id/ibtnSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/ibtnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/search_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edtSearch"
+        app:srcCompat="@drawable/ic_baseline_search_40" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_md"
+        android:layout_marginTop="@dimen/margin_y_md"
+        android:text="@string/status"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSearch" />
+
+    <TextView
+        android:id="@+id/tvOrderBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_lg"
+        android:text="@string/order_by"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintStart_toEndOf="@+id/tvStatus"
+        app:layout_constraintTop_toTopOf="@+id/tvStatus" />
+
+    <ImageButton
+        android:id="@+id/ibtnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_x_md"
+        android:layout_marginBottom="@dimen/margin_y_md"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_add_circle_outline_40" />
+
+    <ImageButton
+        android:id="@+id/ibtnFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtSearch"
+        app:srcCompat="@drawable/ic_baseline_filter_list_40" />
+
+    <ListView
+        android:id="@+id/lv_tasks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/ibtnAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnFilter" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

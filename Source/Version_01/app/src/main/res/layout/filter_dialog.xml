@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_lg"
+        android:text="@string/status"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinnerStatus" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_lg"
+        android:text="@string/order_by"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerOrderBy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/spinnerOrderBy"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tvResetDefaultFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_lg"
+        android:layout_marginTop="32dp"
+        android:text="@string/reset_default"
+        android:textColor="@drawable/custom_textview_pressed"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/tvCancelFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_x_md"
+        android:text="@string/cancel"
+        android:textColor="@drawable/custom_textview_pressed"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintEnd_toStartOf="@+id/tvSubmitFilter"
+        app:layout_constraintTop_toTopOf="@+id/tvSubmitFilter" />
+
+    <TextView
+        android:id="@+id/tvSubmitFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="@dimen/margin_x_lg"
+        android:text="@string/submit"
+        android:textColor="@drawable/custom_textview_pressed"
+        android:textSize="@dimen/text_size_lg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Spinner
+        android:id="@+id/spinnerStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_md"
+        android:layout_marginTop="@dimen/margin_y_lg"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerOrderBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_x_md"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerStatus" />
+</androidx.constraintlayout.widget.ConstraintLayout>
