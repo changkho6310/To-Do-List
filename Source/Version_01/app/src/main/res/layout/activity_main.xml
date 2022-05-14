@@ -11,7 +11,7 @@
     tools:context=".MainActivity">
 
     <AutoCompleteTextView
-        android:id="@+id/edtSearch"
+        android:id="@+id/actvSearch"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="@dimen/margin_y_md"
@@ -32,8 +32,8 @@
         android:background="@android:color/transparent"
         android:contentDescription="@string/search_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edtSearch"
-        app:srcCompat="@drawable/ic_baseline_search_40" />
+        app:layout_constraintTop_toTopOf="@+id/actvSearch"
+        app:srcCompat="@drawable/ic_search" />
 
     <TextView
         android:id="@+id/tvStatus"
@@ -44,7 +44,7 @@
         android:text="@string/status"
         android:textSize="@dimen/text_size_lg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtSearch" />
+        app:layout_constraintTop_toBottomOf="@+id/actvSearch" />
 
     <TextView
         android:id="@+id/tvOrderBy"
@@ -65,7 +65,7 @@
         android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_circle_outline_40" />
+        app:srcCompat="@drawable/ic_add" />
 
     <ImageButton
         android:id="@+id/ibtnFilter"
@@ -73,13 +73,15 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtSearch"
-        app:srcCompat="@drawable/ic_baseline_filter_list_40" />
+        app:layout_constraintTop_toBottomOf="@+id/actvSearch"
+        app:srcCompat="@drawable/ic_filter" />
 
     <ListView
         android:id="@+id/lv_tasks"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_y_lg"
+        android:layout_marginBottom="@dimen/margin_y_lg"
         app:layout_constraintBottom_toTopOf="@+id/ibtnAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
