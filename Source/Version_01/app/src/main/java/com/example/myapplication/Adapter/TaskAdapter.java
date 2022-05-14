@@ -1,14 +1,12 @@
 package com.example.myapplication.Adapter;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,39 +42,48 @@ public class TaskAdapter extends BaseAdapter {
         return 0;
     }
 
+    private class ViewHolder {
+        CheckBox chkTask;
+        TextView tvDeadline;
+        ImageButton ibtnEdit, ibtnDelete;
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = layoutInflater.inflate(layout, null);
+        ViewHolder holder;
 
-        // Mapping view
-        CheckBox chkTask = (CheckBox) view.findViewById(R.id.chkTaskDone);
-        TextView tvDeadline = (TextView) view.findViewById(R.id.tvDeadline);
-        ImageButton ibtnEdit = (ImageButton) view.findViewById(R.id.ibtnEdit);
-        ImageButton ibtnDelete = (ImageButton) view.findViewById(R.id.ibtnDelete);
-
+        if (view == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = layoutInflater.inflate(layout, null);
+            holder = new ViewHolder();
+            // Mapping view
+            holder.chkTask = view.findViewById(R.id.chkTaskDone);
+            holder.tvDeadline = view.findViewById(R.id.tvDeadline);
+            holder.ibtnEdit = view.findViewById(R.id.ibtnEdit);
+            holder.ibtnDelete = view.findViewById(R.id.ibtnDelete);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
         Task task = taskList.get(i);
-        chkTask.setText(task.getContent());
-        tvDeadline.setText(task.getDeadline().toString());
+        holder.chkTask.setText(task.getContent());
+        holder.tvDeadline.setText(task.getDeadline().toString());
 
-        ibtnEdit.setTag(i);
-        ibtnDelete.setTag(i);
+        holder.ibtnEdit.setTag(i);
+        holder.ibtnDelete.setTag(i);
 
-        ibtnEdit.setOnClickListener(new View.OnClickListener() {
+        holder.ibtnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
             }
         });
 
-        ibtnDelete.setOnClickListener(new View.OnClickListener() {
+        holder.ibtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int pos = (Integer) view.getTag();
-                View parentRow = (View) view.getParent();
-                ListView listView = (ListView) parentRow.getParent();
-                final int pos = listView.getPositionForView(parentRow);
+                int pos = (Integer) view.getTag();
                 Toast.makeText(context, taskList.get(pos).getContent(), Toast.LENGTH_SHORT).show();
             }
         });
