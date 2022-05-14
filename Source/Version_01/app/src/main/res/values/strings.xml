@@ -9,4 +9,15 @@
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="reset_default">Reset Default</string>
+    <string-array name="filter_status">
+        <item>All</item>
+        <item>Doing</item>
+        <item>Done</item>
+    </string-array>
+    <string-array name="filter_order_by">
+        <item>None</item>
+        <item>Deadline</item>
+    </string-array>
+    <string name="all">All</string>
+    <string name="none">None</string>
 </resources>

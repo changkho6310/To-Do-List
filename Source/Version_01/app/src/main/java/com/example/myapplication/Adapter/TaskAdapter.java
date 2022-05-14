@@ -1,5 +1,6 @@
 package com.example.myapplication.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,4 +91,6 @@ public class TaskAdapter extends BaseAdapter {
 
         return view;
     }
+
+
 }

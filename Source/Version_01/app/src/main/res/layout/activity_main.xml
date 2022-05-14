@@ -42,7 +42,7 @@
         android:layout_marginStart="@dimen/margin_x_md"
         android:layout_marginTop="@dimen/margin_y_md"
         android:text="@string/status"
-        android:textSize="@dimen/text_size_lg"
+        android:textSize="@dimen/text_size_md"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actvSearch" />
 
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_x_lg"
         android:text="@string/order_by"
-        android:textSize="@dimen/text_size_lg"
+        android:textSize="@dimen/text_size_md"
         app:layout_constraintStart_toEndOf="@+id/tvStatus"
         app:layout_constraintTop_toTopOf="@+id/tvStatus" />
 
