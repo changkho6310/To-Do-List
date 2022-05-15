@@ -69,7 +69,7 @@ public class TaskAdapter extends BaseAdapter {
 
         Task task = taskList.get(i);
         holder.chkTask.setText(task.getContent());
-        holder.tvDeadline.setText(task.getDeadline().toString());
+        holder.tvDeadline.setText(task.getStrDeadline());
 
         holder.ibtnEdit.setTag(i);
         holder.ibtnDelete.setTag(i);

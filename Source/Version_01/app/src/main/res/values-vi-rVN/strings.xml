@@ -10,4 +10,21 @@
     <string name="cancel">Hủy bỏ</string>
     <string name="submit">Đồng ý</string>
     <string name="reset_default">Đặt lại mặc định</string>
+    <string name="all">Tất cả</string>
+    <string name="none">Không</string>
+    <string-array name="filter_status">
+        <item>Tất cả</item>
+        <item>Đang thực hiện</item>
+        <item>Hoàn thành</item>
+    </string-array>
+    <string-array name="filter_order_by">
+        <item>Không</item>
+        <item>Hạn chót</item>
+    </string-array>
+    <string name="task">Công việc</string>
+    <string name="msg_task_empty">Ô công việc không được bỏ trống</string>
+    <string name="msg_deadline_not_valid">Trường hạn chót ít nhất là hôm nay</string>
+    <string name="pick_deadline">Chọn Hạn Chót</string>
+    <string name="msg_deadline_empty">Ô hạn chót không được bỏ trống</string>
+    <string name="msg_task_added">Đã thêm công việc</string>
 </resources>

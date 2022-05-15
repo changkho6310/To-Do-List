@@ -20,4 +20,10 @@
     </string-array>
     <string name="all">All</string>
     <string name="none">None</string>
+    <string name="task">Task</string>
+    <string name="msg_task_empty">Task field cannot be left blank !</string>
+    <string name="msg_deadline_not_valid">Deadline field must be from today onwards</string>
+    <string name="pick_deadline">Pick Deadline</string>
+    <string name="msg_deadline_empty">Deadline field cannot be left blank</string>
+    <string name="msg_task_added">Task added</string>
 </resources>

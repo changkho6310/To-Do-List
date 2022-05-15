@@ -12,4 +12,5 @@
     <dimen name="text_size_sm">8sp</dimen>
     <dimen name="text_size_md">14sp</dimen>
     <dimen name="text_size_lg">18sp</dimen>
+    <dimen name="margin_end_dialog">48sp</dimen>
 </resources>
