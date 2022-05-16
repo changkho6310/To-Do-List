@@ -160,34 +160,13 @@ public class Database extends SQLiteOpenHelper {
         try {
             Cursor cursor = null;
             if (status.equals(FILTER_STATUS_ALL)) {
-                cursor = db.query(TODO_TABLE,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
+                cursor = db.query(TODO_TABLE, null, null, null, null, null, null, null);
             } else if (status.equals(FILTER_STATUS_DOING)) {
                 String[] conditionArgs = {"0"};
-                cursor = db.query(TODO_TABLE,
-                        null,
-                        DONE + " = ?",
-                        conditionArgs,
-                        null,
-                        null,
-                        null,
-                        null);
+                cursor = db.query(TODO_TABLE, null, DONE + " = ?", conditionArgs, null, null, null, null);
             } else if (status.equals(FILTER_STATUS_DONE)) {
                 String[] conditionArgs = {"1"};
-                cursor = db.query(TODO_TABLE,
-                        null,
-                        DONE + " = ?",
-                        conditionArgs,
-                        null,
-                        null,
-                        null,
-                        null);
+                cursor = db.query(TODO_TABLE, null, DONE + " = ?", conditionArgs, null, null, null, null);
             }
 
             if (cursor != null) {
@@ -226,15 +205,15 @@ public class Database extends SQLiteOpenHelper {
         if (deadline.equals(FILTER_DEADLINE_TODAY)) {
             long startOfToday = Helpers.getStartOfToday().getTime();
             long endOfToday = Helpers.getEndOfToday().getTime();
-            taskList.removeIf(task -> task.getDeadline().getTime() >= startOfToday && task.getDeadline().getTime() <= endOfToday);
+            taskList.removeIf(task -> !(task.getDeadline().getTime() >= startOfToday && task.getDeadline().getTime() <= endOfToday));
         } else if (deadline.equals(FILTER_DEADLINE_THIS_WEEK)) {
             long startOfThisWeek = Helpers.getStartOfThisWeek().getTime();
             long endOfThisWeek = Helpers.getEndOfTheComingSunday().getTime();
-            taskList.removeIf(task -> task.getDeadline().getTime() >= startOfThisWeek && task.getDeadline().getTime() <= endOfThisWeek);
+            taskList.removeIf(task -> !(task.getDeadline().getTime() >= startOfThisWeek && task.getDeadline().getTime() <= endOfThisWeek));
         } else if (deadline.equals(FILTER_DEADLINE_THIS_MONTH)) {
             long startOfThisMonth = Helpers.getStartOfThisMonth().getTime();
             long endOfThisMonth = Helpers.getEndOfThisMonth().getTime();
-            taskList.removeIf(task -> task.getDeadline().getTime() >= startOfThisMonth && task.getDeadline().getTime() <= endOfThisMonth);
+            taskList.removeIf(task -> !(task.getDeadline().getTime() >= startOfThisMonth && task.getDeadline().getTime() <= endOfThisMonth));
         } else {
             // deadline.equals(FILTER_DEADLINE_ALL)
             // Do nothing
