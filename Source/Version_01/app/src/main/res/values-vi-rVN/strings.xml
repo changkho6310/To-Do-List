@@ -38,4 +38,13 @@
     <string name="msg_task_deleted">đã được xóa</string>
     <string name="msg_task_edited">đã được chỉnh sửa</string>
     <string name="deadline">Hạn chót</string>
+    <string name="filter_status_all">Tất cả</string>
+    <string name="filter_status_doing">Đang thực hiện</string>
+    <string name="filter_status_done">Hoàn thành</string>
+    <string name="filter_order_by_none">Không</string>
+    <string name="filter_order_by_deadline">Hạn chót</string>
+    <string name="filter_deadline_all">Tất cả</string>
+    <string name="filter_deadline_Today">Hôm nay</string>
+    <string name="filter_deadline_this_week">Tuần này</string>
+    <string name="filter_deadline_this_month">Tháng này</string>
 </resources>

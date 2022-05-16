@@ -66,13 +66,22 @@ public class MainActivity extends AppCompatActivity {
         viewMapping();
         initialize();
         taskList = new ArrayList<>();
-        taskList.addAll(getAllTasks());
+        taskList.addAll(db.getAllTasks());
         taskAdapter = new TaskAdapter(this, R.layout.task_item, taskList, taskAdapter);
         taskAdapter.setTaskAdapter(taskAdapter);
         lvTasks.setAdapter(taskAdapter);
 
         ibtnFilter.setOnClickListener(view -> showFilterDialog(MainActivity.this));
         ibtnAdd.setOnClickListener(view -> showAddDialog(MainActivity.this));
+
+        Date date = Helpers.getStartOfThisWeek();
+        Log.d("AAA", "onCreate: " + date.toString());
+        date = Helpers.getEndOfTheComingSunday();
+        Log.d("AAA", "onCreate: " + date.toString());
+        date = Helpers.getStartOfThisMonth();
+        Log.d("AAA", "onCreate: " + date.toString());
+        date = Helpers.getEndOfThisMonth();
+        Log.d("AAA", "onCreate: " + date.toString());
     }
 
     private void initialize() {
@@ -109,9 +118,6 @@ public class MainActivity extends AppCompatActivity {
         tvShowDeadline = findViewById(R.id.tvShowDeadline);
     }
 
-    private List<Task> getAllTasks() {
-        return db.getAllTasks();
-    }
 
     private void showFilterDialog(Context context) {
         Dialog dialog = new Dialog(context);
@@ -179,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
             tvShowStatus.setText(statusMsg);
             tvShowOrderBy.setText(orderByMsg);
             tvShowDeadline.setText(deadlineMsg);
+            updateTaskListView();
             dialog.dismiss();
         });
 
@@ -262,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateTaskListView() {
         taskList.clear();
-        taskList.addAll(getAllTasks());
+        taskList.addAll(db.getFilteredTasks(filterStatus, filterDeadline, filterOrderBy));
         taskAdapter.notifyDataSetChanged();
     }
 }

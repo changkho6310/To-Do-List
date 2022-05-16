@@ -37,4 +37,13 @@
     <string name="msg_task_deleted">deleted</string>
     <string name="msg_task_edited">edited</string>
     <string name="deadline">Deadline</string>
+    <string name="filter_status_all">All</string>
+    <string name="filter_status_doing">Doing</string>
+    <string name="filter_status_done">Done</string>
+    <string name="filter_order_by_none">None</string>
+    <string name="filter_order_by_deadline">Deadline</string>
+    <string name="filter_deadline_all">All</string>
+    <string name="filter_deadline_Today">Today</string>
+    <string name="filter_deadline_this_week">This Week</string>
+    <string name="filter_deadline_this_month">This Month</string>
 </resources>
