@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -32,23 +33,27 @@ import com.example.myapplication.Utils.Helpers;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static int DEVICE_WIDTH;
-    private Database db;
-    private ListView lvTasks;
-    private AutoCompleteTextView actvSearch;
-    private ImageButton ibtnSearch, ibtnAdd, ibtnFilter;
-    private TextView tvShowStatus, tvShowOrderBy, tvShowDeadline;
-    private List<Task> taskList;
-    private TaskAdapter taskAdapter;
     //    private final String DEFAULT_FILTER_STATUS = getResources().getString(R.string.all); => ERROR : Cannot access to null object
     //    Cannot do this => Vậy nên chuyển thành biến thường và đưa vào Initialize()
     //    để getStringResource gán vào
     private String DEFAULT_FILTER_STATUS;
     private String DEFAULT_FILTER_ORDER_BY;
     private String DEFAULT_FILTER_DEADLINE;
+
+    private Database db;
+
+    private ListView lvTasks;
+    private AutoCompleteTextView actvSearch;
+    private ImageButton ibtnSearch, ibtnAdd, ibtnFilter;
+    private TextView tvShowStatus, tvShowOrderBy, tvShowDeadline;
+    private List<Task> taskList;
+    private TaskAdapter taskAdapter;
+
     private String filterStatus;
     private String filterOrderBy;
     private String filterDeadline;
@@ -123,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         Spinner spinnerDeadline = dialog.findViewById(R.id.spinnerDeadline);
 
         constraintLayout.setMinWidth(DEVICE_WIDTH);
-
 
         ArrayAdapter<CharSequence> spinnerAdapterStatus = ArrayAdapter.createFromResource(context, R.array.filter_status, android.R.layout.simple_spinner_item);
         spinnerAdapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
