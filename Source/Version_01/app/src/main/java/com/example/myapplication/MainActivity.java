@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         viewMapping();
         initialize();
-//        db.onUpgrade(null, 1, 1);
         taskList = new ArrayList<>();
         taskList.addAll(getAllTasks());
         taskAdapter = new TaskAdapter(this, R.layout.task_item, taskList);
@@ -91,43 +90,6 @@ public class MainActivity extends AppCompatActivity {
         ibtnFilter = findViewById(R.id.ibtnFilter);
         tvStatus = findViewById(R.id.tvStatus);
         tvOrderBy = findViewById(R.id.tvOrderBy);
-    }
-
-    private void fakeData() {
-        taskList = new ArrayList<>();
-        Date date = new Date();
-        Timestamp timestamp = new Timestamp(date.getTime());
-        String timestampStr = timestamp.toString();
-        taskList.add(new Task("task 1", timestampStr, true));
-        taskList.add(new Task("task 2", timestampStr, true));
-        taskList.add(new Task("task 3", timestampStr, true));
-        taskList.add(new Task("task 4", timestampStr, true));
-        taskList.add(new Task("task 5", timestampStr, true));
-        taskList.add(new Task("task 6", timestampStr, false));
-        taskList.add(new Task("task 7", timestampStr, false));
-        taskList.add(new Task("task 8", timestampStr, false));
-        taskList.add(new Task("task 9", timestampStr, false));
-        taskList.add(new Task("task 10", timestampStr, false));
-        taskList.add(new Task("task 1", timestampStr, true));
-        taskList.add(new Task("task 2", timestampStr, true));
-        taskList.add(new Task("task 3", timestampStr, true));
-        taskList.add(new Task("task 4", timestampStr, true));
-        taskList.add(new Task("task 5", timestampStr, true));
-        taskList.add(new Task("task 6", timestampStr, false));
-        taskList.add(new Task("task 7", timestampStr, false));
-        taskList.add(new Task("task 8", timestampStr, false));
-        taskList.add(new Task("task 9", timestampStr, false));
-        taskList.add(new Task("task 10", timestampStr, false));
-        taskList.add(new Task("task 1", timestampStr, true));
-        taskList.add(new Task("task 2", timestampStr, true));
-        taskList.add(new Task("task 3", timestampStr, true));
-        taskList.add(new Task("task 4", timestampStr, true));
-        taskList.add(new Task("task 5", timestampStr, true));
-        taskList.add(new Task("task 6", timestampStr, false));
-        taskList.add(new Task("task 7", timestampStr, false));
-        taskList.add(new Task("task 8", timestampStr, false));
-        taskList.add(new Task("task 9", timestampStr, false));
-        taskList.add(new Task("task 10", timestampStr, false));
     }
 
     private List<Task> getAllTasks() {
@@ -171,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerOrderBy.setAdapter(spinnerAdapterOrderBy);
 
 
+        // To get initial value
         String[] tempFilterStatusArray = getResources().getStringArray(R.array.filter_status);
         ArrayList<String> arrayListFilterStatus = new ArrayList<>();
         Collections.addAll(arrayListFilterStatus, tempFilterStatusArray);
@@ -238,10 +201,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 boolean valid = true;
-                String content = edtAddTask.getText().toString();
-                if (content.trim().equals("")) {
-                    Toast.makeText(context, getResources().getString(R.string.msg_task_empty), Toast.LENGTH_SHORT).show();
+                String content = edtAddTask.getText().toString().trim();
+                if (content.equals("")) {
                     valid = false;
+                    Toast.makeText(context, getResources().getString(R.string.msg_task_empty), Toast.LENGTH_SHORT).show();
                 }
 
                 String deadline = tvShowDeadline.getText().toString();

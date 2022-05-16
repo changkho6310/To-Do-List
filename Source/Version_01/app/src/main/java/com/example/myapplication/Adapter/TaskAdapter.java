@@ -1,12 +1,13 @@
 package com.example.myapplication.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,7 +90,26 @@ public class TaskAdapter extends BaseAdapter {
             }
         });
 
+        holder.chkTask.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    strikeThrough(holder.chkTask);
+                } else {
+                    unStrikeThrough(holder.chkTask);
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void strikeThrough(CheckBox chk) {
+        chk.setPaintFlags(chk.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    }
+
+    private void unStrikeThrough(CheckBox chk) {
+        chk.setPaintFlags(chk.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
     }
 
 
