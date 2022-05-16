@@ -21,6 +21,12 @@
         <item>Không</item>
         <item>Hạn chót</item>
     </string-array>
+    <string-array name="filter_deadline">
+        <item>Tất cả</item>
+        <item>Hôm nay</item>
+        <item>Tuần này</item>
+        <item>Tháng này</item>
+    </string-array>
     <string name="task">Công việc</string>
     <string name="msg_task_empty">Ô công việc không được bỏ trống</string>
     <string name="msg_deadline_not_valid">Trường hạn chót ít nhất là hôm nay</string>
@@ -31,4 +37,5 @@
     <string name="msg_confirm_delete_task">Bạn chắc rằng bạn muốn xóa công việc này chứ?</string>
     <string name="msg_task_deleted">đã được xóa</string>
     <string name="msg_task_edited">đã được chỉnh sửa</string>
+    <string name="deadline">Hạn chót</string>
 </resources>

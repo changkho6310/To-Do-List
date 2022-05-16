@@ -36,7 +36,7 @@
         app:srcCompat="@drawable/ic_search" />
 
     <TextView
-        android:id="@+id/tvStatus"
+        android:id="@+id/tvShowStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_x_md"
@@ -47,14 +47,14 @@
         app:layout_constraintTop_toBottomOf="@+id/actvSearch" />
 
     <TextView
-        android:id="@+id/tvOrderBy"
+        android:id="@+id/tvShowOrderBy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_x_lg"
+        android:layout_marginTop="@dimen/margin_y_sm"
         android:text="@string/order_by"
         android:textSize="@dimen/text_size_md"
-        app:layout_constraintStart_toEndOf="@+id/tvStatus"
-        app:layout_constraintTop_toTopOf="@+id/tvStatus" />
+        app:layout_constraintStart_toStartOf="@+id/tvShowStatus"
+        app:layout_constraintTop_toBottomOf="@+id/tvShowStatus" />
 
     <ImageButton
         android:id="@+id/ibtnAdd"
@@ -72,8 +72,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/tvShowDeadline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actvSearch"
+        app:layout_constraintTop_toTopOf="@+id/tvShowStatus"
         app:srcCompat="@drawable/ic_filter" />
 
     <ListView
@@ -86,6 +87,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ibtnFilter" />
+
+    <TextView
+        android:id="@+id/tvShowDeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_y_sm"
+        android:text="@string/deadline"
+        android:textSize="@dimen/text_size_md"
+        app:layout_constraintStart_toStartOf="@+id/tvShowOrderBy"
+        app:layout_constraintTop_toBottomOf="@+id/tvShowOrderBy" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

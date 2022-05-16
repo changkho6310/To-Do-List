@@ -29,11 +29,9 @@ import com.example.myapplication.Model.Task;
 import com.example.myapplication.Utils.Database;
 import com.example.myapplication.Utils.Helpers;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView lvTasks;
     private AutoCompleteTextView actvSearch;
     private ImageButton ibtnSearch, ibtnAdd, ibtnFilter;
-    private TextView tvStatus, tvOrderBy;
+    private TextView tvShowStatus, tvShowOrderBy, tvShowDeadline;
     private List<Task> taskList;
     private TaskAdapter taskAdapter;
     //    private final String DEFAULT_FILTER_STATUS = getResources().getString(R.string.all); => ERROR : Cannot access to null object
@@ -50,8 +48,10 @@ public class MainActivity extends AppCompatActivity {
     //    để getStringResource gán vào
     private String DEFAULT_FILTER_STATUS;
     private String DEFAULT_FILTER_ORDER_BY;
+    private String DEFAULT_FILTER_DEADLINE;
     private String filterStatus;
     private String filterOrderBy;
+    private String filterDeadline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,13 +81,16 @@ public class MainActivity extends AppCompatActivity {
         db.openDatabase();
         DEFAULT_FILTER_STATUS = getResources().getString(R.string.all);
         DEFAULT_FILTER_ORDER_BY = getResources().getString(R.string.none);
+        DEFAULT_FILTER_DEADLINE = getResources().getString(R.string.all);
         filterStatus = DEFAULT_FILTER_STATUS;
         filterOrderBy = DEFAULT_FILTER_ORDER_BY;
-
+        filterDeadline = DEFAULT_FILTER_DEADLINE;
         String statusMsg = getResources().getString(R.string.status) + ": " + filterStatus;
         String orderByMsg = getResources().getString(R.string.order_by) + ": " + filterOrderBy;
-        tvStatus.setText(statusMsg);
-        tvOrderBy.setText(orderByMsg);
+        String deadlineMsg = getResources().getString(R.string.deadline) + ": " + filterDeadline;
+        tvShowStatus.setText(statusMsg);
+        tvShowOrderBy.setText(orderByMsg);
+        tvShowDeadline.setText(deadlineMsg);
     }
 
     private void viewMapping() {
@@ -96,8 +99,9 @@ public class MainActivity extends AppCompatActivity {
         ibtnSearch = findViewById(R.id.ibtnSearch);
         ibtnAdd = findViewById(R.id.ibtnAdd);
         ibtnFilter = findViewById(R.id.ibtnFilter);
-        tvStatus = findViewById(R.id.tvStatus);
-        tvOrderBy = findViewById(R.id.tvOrderBy);
+        tvShowStatus = findViewById(R.id.tvShowStatus);
+        tvShowOrderBy = findViewById(R.id.tvShowOrderBy);
+        tvShowDeadline = findViewById(R.id.tvShowDeadline);
     }
 
     private List<Task> getAllTasks() {
@@ -116,20 +120,9 @@ public class MainActivity extends AppCompatActivity {
         TextView tvSubmit = dialog.findViewById(R.id.tvSubmitFilter);
         Spinner spinnerStatus = dialog.findViewById(R.id.spinnerStatus);
         Spinner spinnerOrderBy = dialog.findViewById(R.id.spinnerOrderBy);
+        Spinner spinnerDeadline = dialog.findViewById(R.id.spinnerDeadline);
 
-
-        // Get width of device
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-
-        // Q:
-        // Is Dialog always smaller than Activity that contain it?
-        // Because I setMinWidth(10000), but maxWidth of Dialog don't change (Always smaller than Activity container)
-
-        // If u don't setMinWidth => Dialog will be scaled down. I don't know why...
-        constraintLayout.setMinWidth(width);
-        dialog.show();
+        constraintLayout.setMinWidth(DEVICE_WIDTH);
 
 
         ArrayAdapter<CharSequence> spinnerAdapterStatus = ArrayAdapter.createFromResource(context, R.array.filter_status, android.R.layout.simple_spinner_item);
@@ -139,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> spinnerAdapterOrderBy = ArrayAdapter.createFromResource(context, R.array.filter_order_by, android.R.layout.simple_spinner_item);
         spinnerAdapterOrderBy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOrderBy.setAdapter(spinnerAdapterOrderBy);
+
+        ArrayAdapter<CharSequence> spinnerAdapterDeadline = ArrayAdapter.createFromResource(context, R.array.filter_deadline, android.R.layout.simple_spinner_item);
+        spinnerAdapterDeadline.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDeadline.setAdapter(spinnerAdapterDeadline);
 
 
         // To get initial value
@@ -150,14 +147,20 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> arrayListFilterOrderBy = new ArrayList<>();
         Collections.addAll(arrayListFilterOrderBy, tempFilterOrderByArray);
 
+        String[] tempFilterDeadline = getResources().getStringArray(R.array.filter_deadline);
+        ArrayList<String> arrayListFilterDeadline = new ArrayList<>();
+        Collections.addAll(arrayListFilterDeadline, tempFilterDeadline);
+
 
         // Initial value
         spinnerStatus.setSelection(arrayListFilterStatus.indexOf(filterStatus));
         spinnerOrderBy.setSelection(arrayListFilterOrderBy.indexOf(filterOrderBy));
+        spinnerDeadline.setSelection(arrayListFilterDeadline.indexOf(filterDeadline));
 
         tvResetDefault.setOnClickListener(view -> {
             spinnerStatus.setSelection(arrayListFilterStatus.indexOf(DEFAULT_FILTER_STATUS));
             spinnerOrderBy.setSelection(arrayListFilterOrderBy.indexOf(DEFAULT_FILTER_ORDER_BY));
+            spinnerDeadline.setSelection(arrayListFilterDeadline.indexOf(DEFAULT_FILTER_DEADLINE));
         });
 
         tvCancel.setOnClickListener(view -> dialog.dismiss());
@@ -165,12 +168,17 @@ public class MainActivity extends AppCompatActivity {
         tvSubmit.setOnClickListener(view -> {
             filterStatus = arrayListFilterStatus.get(spinnerStatus.getSelectedItemPosition());
             filterOrderBy = arrayListFilterOrderBy.get(spinnerOrderBy.getSelectedItemPosition());
+            filterDeadline = arrayListFilterDeadline.get(spinnerDeadline.getSelectedItemPosition());
             String statusMsg = getResources().getString(R.string.status) + ": " + filterStatus;
             String orderByMsg = getResources().getString(R.string.order_by) + ": " + filterOrderBy;
-            tvStatus.setText(statusMsg);
-            tvOrderBy.setText(orderByMsg);
+            String deadlineMsg = getResources().getString(R.string.deadline) + ": " + filterDeadline;
+            tvShowStatus.setText(statusMsg);
+            tvShowOrderBy.setText(orderByMsg);
+            tvShowDeadline.setText(deadlineMsg);
             dialog.dismiss();
         });
+
+        dialog.show();
     }
 
     private void showAddDialog(Context context) {
