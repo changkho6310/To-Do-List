@@ -27,4 +27,7 @@
     <string name="pick_deadline">Chọn Hạn Chót</string>
     <string name="msg_deadline_empty">Ô hạn chót không được bỏ trống</string>
     <string name="msg_task_added">Đã thêm công việc</string>
+    <string name="warning">Cảnh báo</string>
+    <string name="msg_confirm_delete_task">Bạn chắc rằng bạn muốn xóa công việc này chứ?</string>
+    <string name="msg_task_deleted">đã được xóa</string>
 </resources>

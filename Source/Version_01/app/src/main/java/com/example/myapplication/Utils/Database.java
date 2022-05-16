@@ -2,6 +2,7 @@ package com.example.myapplication.Utils;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.SQLException;
@@ -10,8 +11,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.example.myapplication.Model.Task;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,9 +115,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public void deleteTask(Task task) {
-        int id = task.getId();
-        String whereClause = ID + "=?";
-        db.delete(TODO_TABLE, whereClause, new String[]{String.valueOf(id)});
+        this.deleteTask(task.getId());
     }
 
     public void deleteTask(int id) {

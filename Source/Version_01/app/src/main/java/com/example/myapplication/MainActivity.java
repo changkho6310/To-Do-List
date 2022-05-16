@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton ibtnSearch, ibtnAdd, ibtnFilter;
     private TextView tvStatus, tvOrderBy;
     private List<Task> taskList;
-    TaskAdapter taskAdapter;
+    private TaskAdapter taskAdapter;
     //    private final String DEFAULT_FILTER_STATUS = getResources().getString(R.string.all); => ERROR : Cannot access to null object
     //    Cannot do this => Vậy nên chuyển thành biến thường và đưa vào Initialize()
     //    để getStringResource gán vào
@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
         initialize();
         taskList = new ArrayList<>();
         taskList.addAll(getAllTasks());
-        taskAdapter = new TaskAdapter(this, R.layout.task_item, taskList);
+        taskAdapter = new TaskAdapter(this, R.layout.task_item, taskList, taskAdapter);
+        taskAdapter.setTaskAdapter(taskAdapter);
         lvTasks.setAdapter(taskAdapter);
 
         ibtnFilter.setOnClickListener(view -> showFilterDialog(MainActivity.this));

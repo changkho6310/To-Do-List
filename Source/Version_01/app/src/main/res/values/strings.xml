@@ -26,4 +26,7 @@
     <string name="pick_deadline">Pick Deadline</string>
     <string name="msg_deadline_empty">Deadline field cannot be left blank</string>
     <string name="msg_task_added">Task added</string>
+    <string name="warning">Warning</string>
+    <string name="msg_confirm_delete_task">Are you sure you want to delete this task?</string>
+    <string name="msg_task_deleted">deleted</string>
 </resources>
