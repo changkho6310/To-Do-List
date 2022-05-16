@@ -37,6 +37,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static int DEVICE_WIDTH;
     private Database db;
     private ListView lvTasks;
     private AutoCompleteTextView actvSearch;
@@ -70,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
+        // Get width of device
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        DEVICE_WIDTH = displayMetrics.widthPixels;
+
+
         db = new Database(MainActivity.this, NAME, null, VERSION);
         db.openDatabase();
         DEFAULT_FILTER_STATUS = getResources().getString(R.string.all);
@@ -180,13 +187,8 @@ public class MainActivity extends AppCompatActivity {
         TextView tvShowDeadline = dialog.findViewById(R.id.ivShowDeadline);
         Button btnPickDeadline = dialog.findViewById(R.id.btnPickDeadline);
 
-        // Get width of device
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
-
         // Set min width of dialog
-        constraintLayout.setMinWidth(width);
+        constraintLayout.setMinWidth(DEVICE_WIDTH);
 
         // Add DateTimePickerDialog
         addDateTimePickerDialog(tvShowDeadline, btnPickDeadline, context);

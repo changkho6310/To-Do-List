@@ -126,7 +126,7 @@ public class Database extends SQLiteOpenHelper {
     public void updateTask(Task task) {
         ContentValues cv = new ContentValues();
         cv.put(CONTENT, task.getContent());
-        cv.put(DEADLINE, task.getDeadline().toString());
+        cv.put(DEADLINE, task.getStrDeadline());
         cv.put(DONE, task.isDone());
         db.beginTransaction();
         try {

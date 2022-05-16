@@ -30,4 +30,5 @@
     <string name="warning">Cảnh báo</string>
     <string name="msg_confirm_delete_task">Bạn chắc rằng bạn muốn xóa công việc này chứ?</string>
     <string name="msg_task_deleted">đã được xóa</string>
+    <string name="msg_task_edited">đã được chỉnh sửa</string>
 </resources>

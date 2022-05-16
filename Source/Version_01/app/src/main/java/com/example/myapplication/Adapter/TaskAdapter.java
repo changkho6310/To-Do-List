@@ -1,8 +1,12 @@
 package com.example.myapplication.Adapter;
 
+import static com.example.myapplication.MainActivity.DEVICE_WIDTH;
 import static com.example.myapplication.Utils.Database.NAME;
 import static com.example.myapplication.Utils.Database.VERSION;
+import static com.example.myapplication.Utils.Helpers.dateFormat;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Paint;
@@ -10,18 +14,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplication.Model.Task;
 import com.example.myapplication.R;
 import com.example.myapplication.Utils.Database;
+import com.example.myapplication.Utils.Helpers;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -95,6 +105,7 @@ public class TaskAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int pos = (Integer) view.getTag();
+                showEditTaskDialog(pos);
             }
         });
 
@@ -102,7 +113,7 @@ public class TaskAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int pos = (Integer) view.getTag();
-                confirmDeleteTask(pos);
+                showDeleteTaskDialog(pos);
             }
         });
 
@@ -128,7 +139,7 @@ public class TaskAdapter extends BaseAdapter {
         chk.setPaintFlags(chk.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
     }
 
-    private void confirmDeleteTask(int pos) {
+    private void showDeleteTaskDialog(int pos) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
         alertDialog.setTitle(context.getResources().getString(R.string.warning));
         alertDialog.setMessage(context.getResources().getString(R.string.msg_confirm_delete_task));
@@ -153,5 +164,99 @@ public class TaskAdapter extends BaseAdapter {
             }
         });
         alertDialog.show();
+    }
+
+    private void showEditTaskDialog(int pos) {
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.add_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+
+        // Mapping views
+        Button btnCancel = dialog.findViewById(R.id.btnCancelAddTask);
+        Button btnSubmit = dialog.findViewById(R.id.btnSubmitAddTask);
+        ConstraintLayout constraintLayout = dialog.findViewById(R.id.constraintAdd);
+        EditText edtAddTask = dialog.findViewById(R.id.edtAddTask);
+        TextView tvShowDeadline = dialog.findViewById(R.id.ivShowDeadline);
+        Button btnPickDeadline = dialog.findViewById(R.id.btnPickDeadline);
+
+
+        Task editingTask = taskList.get(pos);
+
+        // Assign initial data
+        edtAddTask.setText(editingTask.getContent());
+        tvShowDeadline.setText(editingTask.getStrDeadline());
+
+        // Set min width of dialog
+        constraintLayout.setMinWidth(DEVICE_WIDTH);
+
+        // Add DateTimePickerDialog
+        addDateTimePickerDialog(tvShowDeadline, btnPickDeadline, context);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean valid = true;
+                String content = edtAddTask.getText().toString().trim();
+                if (content.equals("")) {
+                    valid = false;
+                    Toast.makeText(context, context.getResources().getString(R.string.msg_task_empty), Toast.LENGTH_SHORT).show();
+                }
+
+                String deadline = tvShowDeadline.getText().toString();
+                if (deadline.equals("")) {
+                    valid = false;
+                    Toast.makeText(context, context.getResources().getString(R.string.msg_deadline_empty), Toast.LENGTH_SHORT).show();
+                } else if (!Helpers.isDateAfterNow(deadline)) {
+                    valid = false;
+                    Toast.makeText(context, context.getResources().getString(R.string.msg_deadline_not_valid), Toast.LENGTH_SHORT).show();
+                }
+                if (valid) {
+                    if (content.equals(editingTask.getContent()) && deadline.equals(editingTask.getStrDeadline())) {
+                        // No update
+
+                    } else {
+                        editingTask.setContent(content);
+                        editingTask.setDeadline(deadline);
+                        db.updateTask(editingTask);
+
+                        String msg = context.getResources().getString(R.string.task) + ": " + content + context.getResources().getString(R.string.msg_task_edited);
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
+                        // Update ListView
+                        taskAdapter.notifyDataSetChanged();
+                    }
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        dialog.show();
+    }
+
+    private void addDateTimePickerDialog(TextView showDeadline, Button btnPickDeadline, Context context) {
+        btnPickDeadline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DATE);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        calendar.set(i, i1, i2);
+                        showDeadline.setText(dateFormat.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
     }
 }
