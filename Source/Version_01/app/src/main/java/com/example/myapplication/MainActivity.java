@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.Utils.Database.DEFAULT_SEARCH_KEYS;
 import static com.example.myapplication.Utils.Database.NAME;
 import static com.example.myapplication.Utils.Database.VERSION;
 import static com.example.myapplication.Utils.Helpers.dateFormat;
@@ -31,10 +32,13 @@ import com.example.myapplication.Utils.Database;
 import com.example.myapplication.Utils.Helpers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     public static int DEVICE_WIDTH;
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private String DEFAULT_FILTER_STATUS;
     private String DEFAULT_FILTER_ORDER_BY;
     private String DEFAULT_FILTER_DEADLINE;
-
     private Database db;
 
     private ListView lvTasks;
@@ -52,11 +55,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton ibtnSearch, ibtnAdd, ibtnFilter;
     private TextView tvShowStatus, tvShowOrderBy, tvShowDeadline;
     private List<Task> taskList;
+    private List<Task> allTaskList;
     private TaskAdapter taskAdapter;
 
     private String filterStatus;
     private String filterOrderBy;
     private String filterDeadline;
+    private String searchKeys;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
         ibtnFilter.setOnClickListener(view -> showFilterDialog(MainActivity.this));
         ibtnAdd.setOnClickListener(view -> showAddDialog(MainActivity.this));
+        ibtnSearch.setOnClickListener(view -> handleSearch());
+
+        handleAutoCompleteTextView();
 
         Date date = Helpers.getStartOfThisWeek();
         Log.d("AAA", "onCreate: " + date.toString());
@@ -93,12 +101,15 @@ public class MainActivity extends AppCompatActivity {
 
         db = new Database(MainActivity.this, NAME, null, VERSION);
         db.openDatabase();
+        allTaskList = db.getAllTasks();
+
         DEFAULT_FILTER_STATUS = getResources().getString(R.string.all);
         DEFAULT_FILTER_ORDER_BY = getResources().getString(R.string.none);
         DEFAULT_FILTER_DEADLINE = getResources().getString(R.string.all);
         filterStatus = DEFAULT_FILTER_STATUS;
         filterOrderBy = DEFAULT_FILTER_ORDER_BY;
         filterDeadline = DEFAULT_FILTER_DEADLINE;
+        searchKeys = Database.DEFAULT_SEARCH_KEYS;
         String statusMsg = getResources().getString(R.string.status) + ": " + filterStatus;
         String orderByMsg = getResources().getString(R.string.order_by) + ": " + filterOrderBy;
         String deadlineMsg = getResources().getString(R.string.deadline) + ": " + filterDeadline;
@@ -269,7 +280,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateTaskListView() {
         taskList.clear();
-        taskList.addAll(db.getFilteredTasks(filterStatus, filterDeadline, filterOrderBy));
+        taskList.addAll(db.getFilteredTasks(searchKeys, filterStatus, filterDeadline, filterOrderBy));
+        handleAutoCompleteTextView();
         taskAdapter.notifyDataSetChanged();
+    }
+
+    private void handleAutoCompleteTextView() {
+        Set<String> dataSet = new HashSet<>();
+        for (Task task : allTaskList) {
+            dataSet.addAll(Arrays.asList(task.getContent()));
+        }
+        String[] dataArr = new String[dataSet.size()];
+        dataSet.toArray(dataArr);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataArr);
+        actvSearch.setAdapter(arrayAdapter);
+    }
+
+    private void handleSearch() {
+        searchKeys = actvSearch.getText().toString().trim();
+        updateTaskListView();
     }
 }

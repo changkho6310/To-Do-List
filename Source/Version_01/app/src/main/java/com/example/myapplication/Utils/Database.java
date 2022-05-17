@@ -26,7 +26,7 @@ public class Database extends SQLiteOpenHelper {
     public static String FILTER_DEADLINE_TODAY;
     public static String FILTER_DEADLINE_THIS_WEEK;
     public static String FILTER_DEADLINE_THIS_MONTH;
-
+    public static String DEFAULT_SEARCH_KEYS;
 
     public static final String DEADLINE_FORMAT = "dd/MM/yyyy";
     public static final String TAG = Database.class.getName();
@@ -57,6 +57,7 @@ public class Database extends SQLiteOpenHelper {
         FILTER_DEADLINE_TODAY = context.getResources().getString(R.string.filter_deadline_Today);
         FILTER_DEADLINE_THIS_WEEK = context.getResources().getString(R.string.filter_deadline_this_week);
         FILTER_DEADLINE_THIS_MONTH = context.getResources().getString(R.string.filter_deadline_this_month);
+        DEFAULT_SEARCH_KEYS = "";
     }
 
     @Override
@@ -154,7 +155,7 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public List<Task> getFilteredTasks(String status, String deadline, String orderBy) {
+    public List<Task> getFilteredTasks(String searchKeys, String status, String deadline, String orderBy) {
         List<Task> taskList = new ArrayList<>();
         db.beginTransaction();
         try {
@@ -199,7 +200,14 @@ public class Database extends SQLiteOpenHelper {
         }
         getTasksByDeadline(taskList, deadline);
         orderBy(taskList, orderBy);
+        getTaskBySearchKeys(taskList, searchKeys);
         return taskList;
+    }
+
+    public void getTaskBySearchKeys(List<Task> taskList, String searchKeys) {
+        if (!searchKeys.equals(DEFAULT_SEARCH_KEYS)) {
+            taskList.removeIf(task -> !task.getContent().contains(searchKeys));
+        }
     }
 
     public void getTasksByDeadline(List<Task> taskList, String deadline) {
