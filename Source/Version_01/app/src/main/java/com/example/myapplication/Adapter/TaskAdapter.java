@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,9 @@ public class TaskAdapter extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.taskList = taskList;
+
+        db = new Database(context, NAME, null, VERSION);
+        db.openDatabase();
     }
 
     public void setTaskAdapter(TaskAdapter taskAdapter) {
@@ -75,20 +79,18 @@ public class TaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        db = new Database(context, NAME, null, VERSION);
-        db.openDatabase();
-
         ViewHolder holder;
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(layout, null);
             holder = new ViewHolder();
-            // Mapping view
+
             holder.chkTask = view.findViewById(R.id.chkTaskDone);
             holder.tvDeadline = view.findViewById(R.id.tvDeadline);
             holder.ibtnEdit = view.findViewById(R.id.ibtnEdit);
             holder.ibtnDelete = view.findViewById(R.id.ibtnDelete);
+
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -98,8 +100,17 @@ public class TaskAdapter extends BaseAdapter {
         holder.chkTask.setText(task.getContent());
         holder.tvDeadline.setText(task.getStrDeadline());
 
+        holder.chkTask.setTag(i);
         holder.ibtnEdit.setTag(i);
         holder.ibtnDelete.setTag(i);
+
+        if (task.isDone()) {
+            holder.chkTask.setChecked(true);
+            strikeThrough(holder.chkTask);
+        } else {
+            holder.chkTask.setChecked(false);
+            unStrikeThrough(holder.chkTask);
+        }
 
         holder.ibtnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,10 +131,13 @@ public class TaskAdapter extends BaseAdapter {
         holder.chkTask.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                int pos = (int) holder.chkTask.getTag();
                 if (checked) {
                     strikeThrough(holder.chkTask);
+                    db.setDone(taskList.get(i).getId(), true);
                 } else {
                     unStrikeThrough(holder.chkTask);
+                    db.setDone(taskList.get(i).getId(), false);
                 }
             }
         });

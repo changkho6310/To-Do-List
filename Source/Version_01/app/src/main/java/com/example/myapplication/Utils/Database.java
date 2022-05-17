@@ -255,4 +255,28 @@ public class Database extends SQLiteOpenHelper {
             taskList.addAll(orderedTaskList);
         }
     }
+
+    public void setDone(Task task) {
+        setDone(task.getId(), task.isDone());
+    }
+
+    public void setDone(int id, boolean isDone) {
+        ContentValues cv = new ContentValues();
+        if (isDone) {
+            cv.put(DONE, 1);
+        } else {
+            cv.put(DONE, 0);
+        }
+        db.beginTransaction();
+        try {
+            String whereClause = ID + "=?";
+            db.update(TODO_TABLE, cv, whereClause, new String[]{String.valueOf(id)});
+            db.setTransactionSuccessful();
+        } catch (SQLException exception) {
+            Log.e(TAG, "setDone: " + exception);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
 }
