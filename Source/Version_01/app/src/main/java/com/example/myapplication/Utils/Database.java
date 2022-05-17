@@ -29,7 +29,7 @@ public class Database extends SQLiteOpenHelper {
 
 
     public static final String DEADLINE_FORMAT = "dd/MM/yyyy";
-    public static final String TAG = Database.class.getName().toString();
+    public static final String TAG = Database.class.getName();
     public static final int VERSION = 1;
     public static final String NAME = "ToDoListDatabase";
     public static final String TODO_TABLE = "ToDo";
@@ -78,7 +78,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public List<Task> getAllTasks() {
-        List<Task> taskList = new ArrayList<Task>();
+        List<Task> taskList = new ArrayList<>();
         db.beginTransaction();
         try {
             Cursor cursor = db.query(TODO_TABLE, null, null, null, null, null, null, null);
@@ -105,7 +105,7 @@ public class Database extends SQLiteOpenHelper {
                 cursor.close();
             }
         } catch (SQLException exception) {
-            Log.e(TAG, "getAllTasks: " + exception.toString());
+            Log.e(TAG, "getAllTasks: " + exception);
         } finally {
             db.endTransaction();
         }
@@ -148,14 +148,14 @@ public class Database extends SQLiteOpenHelper {
             db.update(TODO_TABLE, cv, whereClause, new String[]{String.valueOf(task.getId())});
             db.setTransactionSuccessful();
         } catch (SQLException exception) {
-            Log.e(TAG, "updateTask: " + exception.toString());
+            Log.e(TAG, "updateTask: " + exception);
         } finally {
             db.endTransaction();
         }
     }
 
     public List<Task> getFilteredTasks(String status, String deadline, String orderBy) {
-        List<Task> taskList = new ArrayList<Task>();
+        List<Task> taskList = new ArrayList<>();
         db.beginTransaction();
         try {
             Cursor cursor = null;
@@ -193,11 +193,12 @@ public class Database extends SQLiteOpenHelper {
             }
         } catch (
                 SQLException exception) {
-            Log.e(TAG, "getAllTasks: " + exception.toString());
+            Log.e(TAG, "getAllTasks: " + exception);
         } finally {
             db.endTransaction();
         }
         getTasksByDeadline(taskList, deadline);
+        orderBy(taskList, orderBy);
         return taskList;
     }
 
@@ -217,6 +218,41 @@ public class Database extends SQLiteOpenHelper {
         } else {
             // deadline.equals(FILTER_DEADLINE_ALL)
             // Do nothing
+        }
+    }
+
+    private Task findMinDeadline(List<Task> taskList) {
+        if (taskList != null) {
+            long minDeadline = taskList.get(0).getDeadline().getTime();
+            int minIdx = 0;
+            for (int i = 1; i < taskList.size(); i++) {
+                long compareValue = taskList.get(i).getDeadline().getTime();
+                if (minDeadline > compareValue) {
+                    minDeadline = compareValue;
+                    minIdx = i;
+                }
+            }
+            return taskList.get(minIdx);
+        } else {
+            return null;
+        }
+    }
+
+    public void orderBy(List<Task> taskList, String orderBy) {
+        if (taskList == null) {
+            return;
+        }
+        if (taskList.size() < 2) {
+            return;
+        }
+        if (orderBy.equals(FILTER_ORDER_BY_DEADLINE)) {
+            List<Task> orderedTaskList = new ArrayList<>();
+            while (taskList.size() != 0) {
+                Task task = findMinDeadline(taskList);
+                orderedTaskList.add(task);
+                taskList.remove(task);
+            }
+            taskList.addAll(orderedTaskList);
         }
     }
 }

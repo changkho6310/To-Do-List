@@ -226,7 +226,7 @@ public class TaskAdapter extends BaseAdapter {
                         editingTask.setDeadline(deadline);
                         db.updateTask(editingTask);
 
-                        String msg = context.getResources().getString(R.string.task) + ": " + content + context.getResources().getString(R.string.msg_task_edited);
+                        String msg = context.getResources().getString(R.string.task) + ": " + content + " " + context.getResources().getString(R.string.msg_task_edited);
                         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 
                         // Update ListView
