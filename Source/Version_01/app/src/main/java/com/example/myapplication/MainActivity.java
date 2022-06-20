@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.Utils.Database.DEFAULT_SEARCH_KEYS;
 import static com.example.myapplication.Utils.Database.NAME;
 import static com.example.myapplication.Utils.Database.VERSION;
 import static com.example.myapplication.Utils.Helpers.dateFormat;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        viewMapping();
+        addConstrols();
         initialize();
         taskList = new ArrayList<>();
         taskList.addAll(db.getAllTasks());
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         tvShowDeadline.setText(deadlineMsg);
     }
 
-    private void viewMapping() {
+    private void addConstrols() {
         lvTasks = findViewById(R.id.lv_tasks);
         actvSearch = findViewById(R.id.actvSearch);
         ibtnSearch = findViewById(R.id.ibtnSearch);
